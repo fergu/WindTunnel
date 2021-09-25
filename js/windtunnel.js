@@ -35,7 +35,7 @@ function inputControlChanged() {
 	Uinf = document.getElementById("Uinf").value;
 	mux = -1*document.getElementById("centerX").value;
 	muy = -1*document.getElementById("centerY").value;
-	alpha = document.getElementById("alphaSlider").value;
+	alpha = -1*document.getElementById("alphaSlider").value;
 	sinalpha = math.sin(alpha);
 	cosalpha = math.cos(alpha);
 	tanalpha = math.tan(alpha);
@@ -43,6 +43,18 @@ function inputControlChanged() {
 	mu = math.complex(mux,muy); // Circle center location
 }
 inputControlChanged(); // Call this right away to set our parameters
+
+// This function will be called by a button press to emit a vertical line of "smoke" at the left hand side of the screen to demonstrate how flow over the top of the wing isn't tied to flow at the bottom
+function smokeLine() {
+	const nSmokes = 30; // Number of smoke particles in our line
+	const canvHeight = canv.height;
+	const pxPerSmoke = canvHeight/nSmokes;
+	const T = new Date().getTime();
+	for (i = 0; i < nSmokes; i++) {
+		var newSmoke = new smokeParticle(0,i*pxPerSmoke,T);
+		particles.push(newSmoke);
+	}
+}
 
 // This function resizes the canvas when the window resizes so that it always fills the window
 function windowResized() {
